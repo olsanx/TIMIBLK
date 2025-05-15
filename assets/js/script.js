@@ -414,14 +414,14 @@ Version      : 1.0
 
      window.addEventListener("load", function () {
     const preloader = document.querySelector(".preloader");
-    if (preloader) {
-      preloader.style.transition = "opacity 0.6s ease";
-      preloader.style.opacity = "0";
-
-      // Wait for transition to complete before fully removing
+   if (preloader) {
       setTimeout(() => {
-        preloader.style.display = "none";
-      }, 300); // Match with the CSS transition time
+        preloader.style.opacity = "0";
+        preloader.style.pointerEvents = "none";
+        setTimeout(() => {
+          preloader.style.display = "none";
+        }, 500); // Wait for fade-out transition (optional)
+      }, 5000); // Keep loader for exactly 5 seconds
     }
   });
 
