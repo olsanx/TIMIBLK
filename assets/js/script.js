@@ -1,10 +1,4 @@
-/*
-* ----------------------------------------------------------------------------------------
-Author       : Tanvir Hossain
-Template Name: Nino - Premium Portfolio Template
-Version      : 1.0                                          
-* ----------------------------------------------------------------------------------------
-*/
+
 
 
 (function($) {
@@ -305,45 +299,56 @@ Version      : 1.0
 
     // Function for email address validation
     // Email validation function using a cleaner regex
-    function isValidEmail(email) {
-        const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return pattern.test(email);
-    }
-    
-    $("#contactForm").on("submit", function (e) {
-        e.preventDefault();
-    
-        const name = $("#name").val().trim();
-        const email = $("#email").val().trim();
-        const subject = $("#subject").val().trim();
-        const message = $("#message").val().trim();
-    
-        const isValid = (
+ function isValidEmail(email) {
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(email);
+}
+
+/* $("#contactForm").on("submit", function (e) {
+    e.preventDefault();
+
+    const name = $("#name").val().trim();
+    const email = $("#email").val().trim();
+    const subject = $("#subject").val().trim();
+    const message = $("#message").val().trim();
+
+    const isValid = (
         name.length > 1 &&
         subject.length > 1 &&
         message.length > 1 &&
         isValidEmail(email)
-        );
-    
-        if (isValid) {
+    );
+
+    const $success = $('#contactForm .input-success');
+    const $error = $('#contactForm .input-error');
+    const $submitBtn = $("#contactForm button[type='submit']");
+
+    if (isValid) {
+        $submitBtn.prop("disabled", true).text("Sending...");
+
         $.ajax({
             type: "POST",
             url: "sendmail.php",
             data: { name, email, subject, message },
-            success: function () {
-            $('#contactForm .input-success').delay(500).fadeIn(1000);
-            $('#contactForm .input-error').fadeOut(500);
+            success: function (response) {
+                $success.text(response).fadeIn(1000);
+                $error.fadeOut(500);
+                $("#contactForm")[0].reset();
             },
-            error: function () {
-            $('#contactForm .input-error').text("Something went wrong. Please try again.").delay(500).fadeIn(1000);
-            $('#contactForm .input-success').fadeOut(500);
+            error: function (xhr) {
+                let errMsg = xhr.responseText || "Something went wrong. Please try again.";
+                $error.text(errMsg).fadeIn(1000);
+                $success.fadeOut(500);
+            },
+            complete: function () {
+                $submitBtn.prop("disabled", false).text("Send Message");
             }
         });
-        } else {
-        $('#contactForm .input-error').delay(500).fadeIn(1000);
-        $('#contactForm .input-success').fadeOut(500);
-        }
-    });
+    } else {
+        $error.text("Please fill out all fields correctly.").fadeIn(1000);
+        $success.fadeOut(500);
+    }
+}); */
     
 
 
