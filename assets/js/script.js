@@ -412,18 +412,16 @@ Version      : 1.0
 
     });
 
-     window.addEventListener("load", function () {
+  setTimeout(() => {
     const preloader = document.querySelector(".preloader");
-   if (preloader) {
+    if (preloader) {
+      preloader.style.opacity = "0";
+      preloader.style.pointerEvents = "none";
       setTimeout(() => {
-        preloader.style.opacity = "0";
-        preloader.style.pointerEvents = "none";
-        setTimeout(() => {
-          preloader.style.display = "none";
-        }, 500); // Wait for fade-out transition (optional)
-      }, 5000); // Keep loader for exactly 5 seconds
+        preloader.style.display = "none";
+      }, 500); // Allow fade-out to finish
     }
-  });
+  }, 5000); // 5 seconds
 
     /*
      * ----------------------------------------------------------------------------------------
